@@ -1,91 +1,83 @@
 import React, { useState } from "react";
 
-function RecipeCreate({ setRecipes, recipes, createNewRecipes }) {
-  // Initial State
-  const initalFormState = {
+function RecipeCreate({ createRecipe }) {
+  const initialFormState = {
     name: "",
     cuisine: "",
     photo: "",
     ingredients: "",
     preparation: "",
-  }
-  
-  // Setuping up State
-  const [formData, setFormData] = useState(initalFormState);
-  
-  
-  // Handler => Text for Form
+  };
+
+  const [formData, setFormData] = useState({ ...initialFormState });
+
   const inputTextHandler = ({ target }) => {
-    setFormData({
-      ...formData, [target.name]: target.value,
-    })
+    setFormData({ ...formData, [target.name]: target.value });
   };
-  
-  // Handler => Submit (create) linked to new RecipeList.js
+
   const submitCreateHandler = (event) => {
-    event.preventDefault()
-    createNewRecipes(formData)
-    setFormData(initalFormState)
+    event.preventDefault();
+    createRecipe(formData);
+    setFormData({ ...initialFormState });
   };
-  
-  
-  
-  // webpage form print
+
   return (
-    <form name="create">
+    <form name="create" onSubmit={submitCreateHandler}>
       <table>
         <tbody>
-          <tr> 
-            <td> 
-              <input 
-                onChange={inputTextHandler}
-                type="text"
+          <tr>
+            <td>
+              <input
+                id="name"
                 name="name"
-                value={formData.name}
                 placeholder="Name"
-                required
+                type="text"
+                onChange={inputTextHandler}
+                value={formData.name}
               />
             </td>
-            <td> 
-              <input 
-                onChange={inputTextHandler}
-                type="text"
+            <td>
+              <input
+                id="cuisine"
                 name="cuisine"
-                value={formData.cuisine}
                 placeholder="Cuisine"
-                required
-              /> 
-            </td>
-            <td> 
-              <input 
-                onChange={inputTextHandler}
                 type="text"
+                onChange={inputTextHandler}
+                value={formData.cuisine}
+              />
+            </td>
+            <td>
+              <input
+                id="photo"
                 name="photo"
-                value={formData.photo}
                 placeholder="URL"
-                required
+                type="url"
+                onChange={inputTextHandler}
+                value={formData.photo}
               />
             </td>
             <td>
-              <textarea 
-                onChange={inputTextHandler}
+              <textarea
+                id="ingredients"
                 name="ingredients"
-                value={formData.ingredients}
                 placeholder="Ingredients"
-                required
-              />
-            </td>
-            <td>
-              <textarea 
+                type="text"
                 onChange={inputTextHandler}
-                name="preparation"
-                value={formData.preparation}
-                placeholder="Preparation"
-                required
+                value={formData.ingredients}
               />
             </td>
             <td>
-              <button onClick={submitCreateHandler} type="submit">Create</button>
+              <textarea
+                id="preparation"
+                name="preparation"
+                placeholder="Preparation"
+                type="text"
+                onChange={inputTextHandler}
+                value={formData.preparation}
+              />
+            </td>
+            <td>
+              <button type="submit">Create</button>
             </td>
           </tr>
         </tbody>
