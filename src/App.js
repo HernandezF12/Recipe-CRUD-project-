@@ -6,33 +6,21 @@ import RecipeData from "./RecipeData";
 import RecipeTodoList from "./RecipeToDoList"
 
 function App() {
-  const [recipes, setRecipes] = useState(RecipeData); 
- 
-  // Functions of State => Grabbing existing recipes and combining newRecipes
-  const createNewRecipes = (newRecipes) => {
-    setRecipes([
-      ...recipes, newRecipes
-    ])
-  }
-  
-  // Handler => Delete btn
-  const deleteRecipe = (del) => {
-     const filter = recipes.filter((recipe, index) => {return del !== index})
-     setRecipes(filter)
-    
-  }
+  const [recipes, setRecipes] = useState(RecipeData);
+
+  const createRecipe = (newRecipe) => setRecipes([...recipes, newRecipe]);
+
+  const deleteRecipe = (indexToDelete) =>
+    setRecipes((currentRecipes) =>
+      currentRecipes.filter((recipe, index) => index !== indexToDelete)
+    );
   
   // Webpage return 
   return (
     <div className="App">
       <header><h1>Delicious Food Recipes</h1></header>
-      <RecipeList 
-        recipes={recipes}
-        deleteRecipe={deleteRecipe}
-      />
-      <RecipeCreate 
-        createNewRecipes={createNewRecipes}
-      />
+       <RecipeList recipes={recipes} deleteRecipe={deleteRecipe} />
+      <RecipeCreate createRecipe={createRecipe} />
      
     </div>
   );
